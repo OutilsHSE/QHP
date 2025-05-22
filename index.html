@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quart d'heure prevention (QHP)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            margin-left: 10px;
+            font-size: 14px;
+
+            padding: 0;
+        }
+
+
+        .top-fields {
+            display: flex;
+            flex-wrap: wrap;
+            /* Permettre aux éléments de passer à la ligne si nécessaire */
+            gap: 20px;
+            /* Espace entre les éléments */
+            margin-bottom: 20px;
+            align-items: baseline;
+        }
+
+        .top-fields label {
+            font-weight: bold;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .top-fields input {
+            margin-left: 10px;
+            /* Espace entre le label et l'input */
+            flex: 1;
+            /* Permettre à l'input de prendre l'espace disponible */
+        }
+
+        /* Style pour les petits écrans */
+        @media (max-width: 600px) {
+            .top-fields {
+                flex-direction: column;
+                /* Disposer les éléments en colonne */
+                align-items: flex-start;
+                /* Aligner les éléments à gauche */
+            }
+
+            .top-fields label {
+                width: 100%;
+                /* Prendre toute la largeur disponible */
+            }
+
+            .top-fields input {
+                width: calc(100% - 10px);
+                /* Ajuster la largeur de l'input pour tenir compte de la marge */
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+            table-layout: fixed;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+            width: 33.33%;
+            /* Pour 3 colonnes égales */
+        }
+
+
+        th {
+            background: #f0f0f0;
+        }
+
+        select,
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+        }
+
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .export {
+            background: #2196F3;
+            color: white;
+        }
+
+        .buttons {
+            margin-bottom: 10px;
+        }
+
+        /*Conteneur principal utilisant Flexbox */
+        .container {
+            display: flex;
+            align-items: center;
+            /* Espacer les éléments uniformément */
+            /* Ajouter un peu de padding autour du conteneur */
+            margin-bottom: 50px;
+            background-color: rgb(116, 204, 239);
+        }
+
+        /* Styles pour les images */
+        .logo {
+            max-width: 100px;
+            /* Ajuster la taille des images selon vos besoins */
+            height: auto;
+            /* Maintenir les proportions des images */
+        }
+
+        @media (max-width: 600px) {
+            .regles {
+                max-width: 250px;
+                /* Ajuster la taille des images selon vos besoins */
+                height: auto;
+                /* Maintenir les proportions des images */
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .regles {
+                max-width: 500px;
+                /* Ajuster la taille des images selon vos besoins */
+                height: auto;
+                /* Maintenir les proportions des images */
+            }
+        }
+
+        /* Style pour le titre */
+        h1 {
+            margin-left: 20px;
+            font-size: 2rem;
+        }
+
+        /* Pour les écrans de largeur inférieure à 600px */
+        @media (max-width: 600px) {
+            input::placeholder {
+                font-size: 0.3rem;
+                /* Taille plus petite pour les petits écrans */
+            }
+
+            input,
+            select {
+                font-size: 0.3rem;
+                /* Taille plus petite pour les petits écrans */
+            }
+
+        }
+
+        /* Pour les écrans de largeur supérieure à 1200px */
+        @media (min-width: 1200px) {
+            input::placeholder {
+                font-size: 1.0rem;
+                /* Taille plus grande pour les grands écrans */
+            }
+        }
+
+        .aligned-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .aligned-table th,
+        .aligned-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            vertical-align: top;
+            width: 50%;
+        }
+
+        td input[type="text"] {
+            width: 100%;
+            box-sizing: border-box;
+            /* pour inclure padding + bordure dans la largeur */
+            height: 50px;
+            /* optionnel : pour uniformiser la hauteur aussi */
+        }
+
+        .input-bilan {
+            width: 100%;
+            resize: vertical;
+            box-sizing: border-box;
+            border: 1px solid #aaa;
+            font-size: 14px;
+        }
+
+
+        @media (max-width: 600px) {
+
+            .aligned-table th,
+            .aligned-table td {
+                display: block;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .aligned-table tr {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .aligned-table th {
+                background-color: #f0f0f0;
+                /* Exemple de couleur de fond pour les en-têtes */
+                font-weight: bold;
+            }
+        }
+
+        .large-row {
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        .signature-animateur {
+            border: 1px solid #000;
+        }
+
+        button {
+            margin-left: auto;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            height: 25px;
+            box-sizing: border-box;
+            /* Assure que le padding et la bordure sont inclus dans la largeur */
+        }
+
+        .input-bilan {
+            height: 100px;
+        }
+
+        #flash {
+            width: 42.5rem;
+        }
+
+        @media print {
+
+            /* Cache les boutons et éléments non pertinents à l'impression */
+            button,
+            .no-print {
+                display: none !important;
+            }
+
+            /* Supprime les marges inutiles */
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            /* Évite que les tableaux soient coupés entre deux pages */
+            table {
+                page-break-inside: avoid;
+                break-inside: avoid;
+                table-layout: fixed;
+            }
+
+            /* Fixer les largeurs des colonnes si nécessaire */
+            th,
+            td {
+                width: 50%;
+            }
+
+            textarea.description {
+                width: 100%;
+                height: 150px;
+                overflow: visible;
+                box-sizing: border-box;
+                resize: none;
+                border: none;
+                font-size: 14px;
+                white-space: pre-wrap;
+                word-break: break-word;
+                max-width: 100px;
+            }
+
+            tr {
+                page-break-inside: avoid;
+            }
+
+            td,
+            th {
+                vertical-align: top;
+            }
+
+            /* Agrandir les zones de texte pour qu'elles ne soient pas tronquées */
+            textarea {
+                border: none;
+                resize: none;
+                overflow: visible;
+                font-size: 14pt;
+            }
+
+            .sign {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            .input-bilan {
+                height: 200px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img class="logo" src="CDES_Logo.png" alt="">
+        <h1> Quart d'heure prevention (QHP)</h1>
+    </div>
+    <div class="top-fields">
+        <label>Date:<input type="date" id="visite-date" value=""></label>
+        <label>Chantier:<input type="text" id="chantier" placeholder="Nom du chantier"></label>
+        <label>Animateur du QHP:<input type="text" id="chantier"></label>
+        <label>Thématique:<input type="text" id="chantier"></label>
+        <label>Flash mensuelle/Brefing HSE Démarrage chantiers:<input type="text" id="flash"></label>
+    </div>
+    <table id="obs-table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Signature</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <table class="aligned-table">
+        <th>Mes attentes HSE suite au QHP: </th>
+        <tr>
+            <td>
+                <div class="large-row">
+                    <textarea class="input-bilan" type="text"></textarea>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div class="top-fields">
+        <label>Realisateur:<input type="text" id="realisateur"></label>
+        <label>Date:<input type="date" id="signature-date" value=""></label>
+        <div>
+            <label>Signature de l'animateur:</label>
+            <div class="sign">
+                <canvas id="drawingCanvas1" class="signature-animateur"></canvas>
+                <button onclick="clearCanvas('drawingCanvas1')">🧹 Effacer</button>
+            </div>
+        </div>
+    </div>
+    <div class="buttons">
+        <button class="export" onclick="print()">Imprimer / Exporter</button>
+    </div>
+
+    <script>
+        const tbody = document.querySelector('#obs-table tbody');
+
+        for (let i = 0; i < 10; i++) {
+            const row = document.createElement('tr');
+
+            const tdNom = document.createElement('td');
+            const inputNom = document.createElement('input');
+            inputNom.type = 'text';
+            inputNom.name = `nom_${i}`;
+            tdNom.appendChild(inputNom);
+
+            const tdPrenom = document.createElement('td');
+            const inputPrenom = document.createElement('input');
+            inputPrenom.type = 'text';
+            inputPrenom.name = `prenom_${i}`;
+            tdPrenom.appendChild(inputPrenom);
+
+            const tdSignature = document.createElement('td');
+            const canvas = document.createElement('canvas');
+            canvas.width = 150;
+            canvas.height = 50;
+            canvas.id = `signature_${i}`;
+            canvas.className = 'signature-canvas';
+            tdSignature.appendChild(canvas);
+
+            row.appendChild(tdNom);
+            row.appendChild(tdPrenom);
+            row.appendChild(tdSignature);
+            tbody.appendChild(row);
+        }
+
+
+        window.onload = function () {
+            document.getElementById('visite-date').valueAsDate = new Date();
+            document.getElementById('signature-date').valueAsDate = new Date();
+            // Initialiser tous les canvas
+            for (let i = 0; i < 10; i++) {
+                setupCanvas(`signature_${i}`);
+            }
+        }
+
+        function setupCanvas(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+
+            let painting = false;
+
+            function startPosition(e) {
+                painting = true;
+                draw(e);
+                e.preventDefault(); // Empêche le comportement par défaut
+            }
+
+            function endPosition(e) {
+                painting = false;
+                ctx.beginPath();
+                e.preventDefault(); // Empêche le comportement par défaut
+            }
+
+            function draw(e) {
+                if (!painting) return;
+                const rect = canvas.getBoundingClientRect();
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = '#000';
+
+                let clientX, clientY;
+                if (e.touches && e.touches.length > 0) {
+                    // Utiliser les coordonnées du premier touch point
+                    clientX = e.touches[0].clientX;
+                    clientY = e.touches[0].clientY;
+                } else {
+                    // Utiliser les coordonnées de la souris
+                    clientX = e.clientX;
+                    clientY = e.clientY;
+                }
+
+                ctx.lineTo(clientX - rect.left, clientY - rect.top);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(clientX - rect.left, clientY - rect.top);
+                e.preventDefault(); // Empêche le comportement par défaut
+            }
+
+            // Ajouter des écouteurs pour les événements de souris
+            canvas.addEventListener('mousedown', startPosition);
+            canvas.addEventListener('mouseup', endPosition);
+            canvas.addEventListener('mouseout', endPosition);
+            canvas.addEventListener('mousemove', draw);
+
+            // Ajouter des écouteurs pour les événements tactiles
+            canvas.addEventListener('touchstart', startPosition);
+            canvas.addEventListener('touchend', endPosition);
+            canvas.addEventListener('touchcancel', endPosition);
+            canvas.addEventListener('touchmove', draw);
+        }
+
+        // Initialisation
+        setupCanvas('drawingCanvas1');
+        setupCanvas('drawingCanvas2');
+
+        // Bouton pour effacer
+        function clearCanvas(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Bouton pour effacer
+        function clearCanvas(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    </script>
+</body>
+
+</html>
