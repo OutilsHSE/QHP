@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <title>Quart d'heure prevention (QHP)</title>
     <style>
         body {
@@ -248,7 +249,8 @@
         #flash {
             width: 42.5rem;
         }
-        .theme{
+
+        .theme {
             width: 50rem;
             height: 100px;
         }
@@ -332,7 +334,8 @@
         <label>Date:<input type="date" id="visite-date" value=""></label>
         <label>Chantier:<input type="text" id="chantier" placeholder="Nom du chantier"></label>
         <label>Animateur du QHP:<input type="text" id="chantier"></label>
-        <label>Thématique(Flash mensuelle/Brefing HSE Démarrage chantiers): <textarea class="theme" type="text"></textarea></label>
+        <label>Thématique(Flash mensuelle/Brefing HSE Démarrage chantiers): <textarea class="theme"
+                type="text"></textarea></label>
     </div>
     <table id="obs-table">
         <thead>
@@ -358,8 +361,6 @@
     </table>
 
     <div class="top-fields">
-        <label>Realisateur:<input type="text" id="realisateur"></label>
-        <label>Date:<input type="date" id="signature-date" value=""></label>
         <div>
             <label>Signature de l'animateur:</label>
             <div class="sign">
@@ -369,7 +370,8 @@
         </div>
     </div>
     <div class="buttons">
-        <button class="export" onclick="print()">Imprimer / Exporter</button>
+        <button class="export" onclick="print()">Imprimer</button>
+        <button class="export" onclick="download">Exporter</button>
     </div>
 
     <script>
@@ -488,6 +490,34 @@
             const canvas = document.getElementById(canvasId);
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function download() {
+            const element = document.body.cloneNode(true);
+
+            // Supprimer les boutons et éléments non imprimables
+            const buttons = element.querySelectorAll('button, .no-print');
+            buttons.forEach(btn => btn.remove());
+
+            // Forcer les textareas à afficher leur texte dans une div (comme en mode print)
+            const textareas = element.querySelectorAll('textarea.description');
+            textareas.forEach(textarea => {
+                const div = document.createElement('div');
+                div.className = 'print-description';
+                div.textContent = textarea.value;
+                textarea.parentNode.insertBefore(div, textarea);
+                textarea.remove();
+            });
+
+            const opt = {
+                margin: 0.5,
+                filename: 'VMS_Observations.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save();
         }
     </script>
 </body>
