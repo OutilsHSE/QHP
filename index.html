@@ -395,7 +395,6 @@
 
         window.onload = function () {
             document.getElementById('visite-date').valueAsDate = new Date();
-            document.getElementById('signature-date').valueAsDate = new Date();
             // Initialiser tous les canvas
             for (let i = 0; i < 10; i++) {
                 setupCanvas(`signature_${i}`);
@@ -462,14 +461,6 @@
 
         // Initialisation
         setupCanvas('drawingCanvas1');
-        setupCanvas('drawingCanvas2');
-
-        // Bouton pour effacer
-        function clearCanvas(canvasId) {
-            const canvas = document.getElementById(canvasId);
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
 
         // Bouton pour effacer
         function clearCanvas(canvasId) {
