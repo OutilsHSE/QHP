@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Formulaire de Quart d'heure prévention (QHP) pour la gestion des sessions HSE">
+    <meta name="author" content="CDES">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <title>Quart d'heure prevention (QHP)</title>
     <style>
@@ -319,9 +321,8 @@
     <div class="top-fields">
         <label>Date:<input type="date" id="visite-date" value=""></label>
         <label>Chantier:<input type="text" id="chantier" placeholder="Nom du chantier"></label>
-        <label>Animateur du QHP:<input type="text" id="chantier"></label>
-        <label>Thématique(Flash mensuelle/Brefing HSE Démarrage chantiers): <textarea class="theme"
-                type="text"></textarea></label>
+        <label>Animateur du QHP:<input type="text" id="animateur" placeholder="Nom de l'animateur"></label>
+        <label>Thématique(Flash mensuelle/Brefing HSE Démarrage chantiers): <textarea class="theme" placeholder="Décrivez la thématique..."></textarea></label>
     </div>
     <table id="obs-table">
         <thead>
@@ -350,14 +351,14 @@
         <div>
             <label>Signature de l'animateur:</label>
             <div class="sign">
-                <canvas id="drawingCanvas1" class="signature-animateur"></canvas>
-                <button onclick="clearCanvas('drawingCanvas1')">🧹 Effacer</button>
+                <canvas id="drawingCanvas1" class="signature-animateur" aria-label="Zone de signature de l'animateur"></canvas>
+                <button onclick="clearCanvas('drawingCanvas1')" aria-label="Effacer la signature de l'animateur">🧹 Effacer</button>
             </div>
         </div>
     </div>
     <div class="buttons">
-        <button class="export" onclick="print()">Imprimer</button>
-        <button class="export" onclick="download">Exporter</button>
+        <button class="export" onclick="print()" aria-label="Imprimer le formulaire QHP">Imprimer</button>
+        <button class="export" onclick="download()" aria-label="Exporter le formulaire QHP en PDF">Exporter en PDF</button>
     </div>
 
     <script src="index.js"> </script>
